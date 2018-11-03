@@ -1,4 +1,5 @@
-﻿module.exports = function (RED) {
+﻿'use strict';
+module.exports = function (RED) {
     var Broadlink = require("./Broadlink.js");
     function NodeDevice(n) {
         RED.nodes.createNode(this, n);

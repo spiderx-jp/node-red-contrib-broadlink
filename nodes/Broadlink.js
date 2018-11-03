@@ -1,9 +1,11 @@
-﻿let EventEmitter = require('events');
+﻿'use strict';
+let EventEmitter = require('events');
 let dgram = require('dgram');
 let os = require('os');
 let crypto = require('crypto');
 class Broadlink {
-    constructor(timeout = 10) {
+    constructor(timeout) {
+        var timeout = typeof timeout !== 'undefined' ?  timeout : 10;
         this.devices = {};
     }
 

@@ -1,6 +1,8 @@
-﻿var Device = require("./Device.js");
+﻿'use strict';
+var Device = require("./Device.js");
 class RM extends Device {
-    constructor(host, mac, timeout = 10) {
+    constructor(host, mac, timeout) {
+        var timeout = typeof timeout !== 'undefined' ?  timeout : 10;
         super(host, mac, timeout);
 
         this.on("payload", (err, payload) => {
