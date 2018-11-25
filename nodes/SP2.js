@@ -22,7 +22,8 @@ class SP2 extends Device {
     }
     set_power(state) {
         //"""Sets the power state of the smart plug."""
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 2;
         packet[4] = state ? 1 : 0;
         this.sendPacket(0x6a, packet);
@@ -30,7 +31,8 @@ class SP2 extends Device {
 
     check_power() {
         //"""Returns the power state of the smart plug."""
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 1;
         this.sendPacket(0x6a, packet);
         /*
@@ -53,7 +55,8 @@ class SP2 extends Device {
       return energy
  */
     get_energy() {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 0x04;
         //var packet = new Buffer([0xaa, 0xcf, 0xb7, 0x55, 0x18, 0x08, 0x11, 0x9d, 0xab, 0x7e, 0xfd, 0xe7, 0x07, 0xc5, 0xae, 0x64]);
         //packet[0x00] = 0x08;

@@ -23,7 +23,8 @@ class Device {
             //this.cs.setBroadcast(true);
         });
         this.cs.on("message", (response, rinfo) => {
-            var enc_payload = Buffer.alloc(response.length - 0x38, 0);
+            let enc_payload = new Buffer(response.length - 0x38);
+            enc_payload.fill(0);
             response.copy(enc_payload, 0, 0x38);
 
             var decipher = crypto.createDecipheriv('aes-128-cbc', this.key, this.iv);
@@ -44,10 +45,12 @@ class Device {
             if (err != 0) return;
 
             if (command == 0xe9) {
-                this.key = Buffer.alloc(0x10, 0);
+                this.key = new Buffer(0x10);
+                this.key.fill(0);
                 payload.copy(this.key, 0, 0x04, 0x14);
 
-                this.id = Buffer.alloc(0x04, 0);
+                this.id = new Buffer(0x04);
+                this.id.fill(0)
                 payload.copy(this.id, 0, 0x00, 0x04);
                 this.emit("deviceReady");
             } else if (command == 0xee) {
@@ -60,7 +63,8 @@ class Device {
     }
     sendPacket(command, payload) {
         this.count = (this.count + 1) & 0xffff;
-        var packet = Buffer.alloc(0x38, 0);
+        let packet = new Buffer(0x38);
+        packet.fill(0);
         packet[0x00] = 0x5a;
         packet[0x01] = 0xa5;
         packet[0x02] = 0xaa;
@@ -115,7 +119,8 @@ class Device {
     }
 
     auth() {
-        var payload = Buffer.alloc(0x50, 0);
+        let payload = new Buffer(0x50);
+        payload.fill(0);
         payload[0x04] = 0x31;
         payload[0x05] = 0x31;
         payload[0x06] = 0x31;

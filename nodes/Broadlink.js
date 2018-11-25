@@ -31,7 +31,8 @@ class Broadlink {
             var starttime = now.getTime();
 
             var timezone = now.getTimezoneOffset() / -3600;
-            var packet = Buffer.alloc(0x30, 0);
+            let packet = new Buffer(0x30);
+            packet.fill(0);
 
             var year = now.getYear();
 
@@ -96,7 +97,8 @@ class Broadlink {
     setup(ssid, password, security_mode) {
         //Security mode options are (0 - none, 1 = WEP, 2 = WPA1, 3 = WPA2, 4 = WPA1/2)
 
-        var payload = Buffer.alloc(0x88, 0);
+        let payload = new Buffer(0x88);
+        payload.fill(0);
         payload[0x26] = 0x14  // This seems to always be set to 14
         // Add the SSID to the payload
         var ssid_start = 68;

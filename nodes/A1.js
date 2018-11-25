@@ -20,7 +20,8 @@ class A1 extends Device {
         });
     }
     check_sensors() {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 1;
         this.sendPacket(0x6a, packet);
     }

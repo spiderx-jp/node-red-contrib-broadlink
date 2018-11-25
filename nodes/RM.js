@@ -13,7 +13,8 @@ class RM extends Device {
                     this.emit("temperature", temp);
                     break;
                 case 4: //get from check_data
-                    var data = Buffer.alloc(payload.length - 4, 0);
+                    var data = new Buffer(payload.length - 4);
+                    data.fill(0);
                     payload.copy(data, 0, 4);
                     this.emit("data", Array.prototype.slice.call(data, 0));
                     break;
@@ -23,7 +24,8 @@ class RM extends Device {
 
                     
                 case 26: //get from check_data
-                    var data = Buffer.alloc(1, 0);
+                    var data = new Buffer(1);
+                    data.fill(0);
                     payload.copy(data, 0, 0x4);
                     // console.log('payload', payload)
 
@@ -34,7 +36,8 @@ class RM extends Device {
                     this.emit("rawRFData", data);
                     break;
                 case 27: //get from check_data
-                    var data = Buffer.alloc(1, 0);
+                    var data = new Buffer(1);
+                    data.fill(0);
                     payload.copy(data, 0, 0x4);
                     // console.log('payload', payload)
 
@@ -49,50 +52,57 @@ class RM extends Device {
     }
 
     checkTemperature() {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 1;
         this.sendPacket(0x6a, packet);
     }
 
 
     enterLearning() {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 3;
         this.sendPacket(0x6a, packet);
     }
     checkData() {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 4;
         this.sendPacket(0x6a, packet);
     }
 
     sendData(data) {
-        var packet = new Buffer([0x02, 0x00, 0x00, 0x00]);
+        let packet = new Buffer([0x02, 0x00, 0x00, 0x00]);
         packet = Buffer.concat([packet, data]);
         this.sendPacket(0x6a, packet);
     }
 
     //if(isPlus) {
         enterRFSweep() {
-            var packet = Buffer.alloc(16, 0);
+            let packet = new Buffer(16);
+            packet.fill(0);
             packet[0] = 0x19;
             this.sendPacket(0x6a, packet);
         }
 
         checkRFData() {
-            var packet = Buffer.alloc(16, 0);
+            let packet = new Buffer(16);
+            packet.fill(0);
             packet[0] = 0x1a;
             this.sendPacket(0x6a, packet);
         }
 
         checkRFData2() {
-            var packet = Buffer.alloc(16, 0);
+            let packet = new Buffer(16);
+            packet.fill(0);
             packet[0] = 0x1b;
             this.sendPacket(0x6a, packet);
         }
 
         cancelRFSweep() {
-            var packet = Buffer.alloc(16, 0);
+            let packet = new Buffer(16);
+            packet.fill(0);
             packet[0] = 0x1e;
             this.sendPacket(0x6a, packet);
         }

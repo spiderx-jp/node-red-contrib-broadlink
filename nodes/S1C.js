@@ -81,13 +81,15 @@ class S1C extends Device {
 
 
 
-                        sensor.name = Buffer.alloc(22, 0);
+                        sensor.name = new Buffer(22);
+                        sensor.name.fill(0);
                         for (var i = 4; i < 26; i++) {
                             sensor.name[i - 4] = payload[(j * 83) + i + 6]
                         }
                         sensor.name = sensor.name.toString('utf8').replace(/\0/g, '');
 
-                        var sensorSerial = Buffer.alloc(4, 0);
+                        let sensorSerial = new Buffer(4);
+                        sensorSerial.fill(0);
                         for (var i = 26; i < 30; i++) {
                             sensorSerial[i - 26] = payload[(j * 83) + i + 6]
                         }
@@ -95,7 +97,7 @@ class S1C extends Device {
                             .split('').map(function (v) {
                                 return v.charCodeAt(0).toString(16)
                             }).join('')
-
+                        
                         // console.log("sensor #" + (j+1) + " name: " + sensor.name)
                         // console.log("sensor #" + (j+1) + " type: " + sensor.type)
                         // console.log("sensor #" + (j+1) + " status: " + sensor.status);
@@ -164,32 +166,37 @@ class S1C extends Device {
         });
     }
     check_sensors() {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 1;
         this.sendPacket(0x6a, packet);
     }
 
     get_sensors_status() {
         //"""Returns the sensors state of the s1c"""
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 0x06
         this.sendPacket(0x6a, packet);
     }
 
     get_alarm_status() {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 0x12
         this.sendPacket(0x6a, packet);
     }
 
     get_trigger_status() {
-        var packet = Buffer.alloc(16, 0);
+        let  packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 0x10
         this.sendPacket(0x6a, packet);
     }
 
     set_alarm_status(state, notification_sound, alarm_sound) {
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0] = 0x11;
         switch (state) {
             case "full_arm":

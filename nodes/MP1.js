@@ -18,7 +18,8 @@ class MP1 extends Device {
     set_power_mask(sid_mask, state) {
         //"""Sets the power state of the smart power strip."""
 
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0x00] = 0x0d;
         packet[0x02] = 0xa5;
         packet[0x03] = 0xa5;
@@ -42,7 +43,8 @@ class MP1 extends Device {
     }
     check_power_raw() {
         //"""Returns the power state of the smart power strip in raw format."""
-        var packet = Buffer.alloc(16, 0);
+        let packet = new Buffer(16);
+        packet.fill(0);
         packet[0x00] = 0x0a;
         packet[0x02] = 0xa5;
         packet[0x03] = 0xa5;
